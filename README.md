@@ -1,8 +1,8 @@
-# Noted - A Comprehensive Note-Taking Platform
+# 📝 Noted - A Comprehensive Note-Taking Platform
 
 ## Overview
 
-"Noted" is a revolutionary note-taking platform designed to transform the academic landscape. It offers robust note-taking capabilities and fosters seamless collaboration between teachers and students. With features like shared note-sharing and a collaborative "nest" environment, students and teachers can collectively edit materials in real-time, fostering a dynamic learning community. Additionally, its language translation services, supporting over 50 languages, coupled with text-to-speech and speech-to-text functionalities, ensure accessibility and inclusivity for all users. We transcend learning boundaries, empowering users worldwide to engage, collaborate, and thrive.
+"Noted" is a 🚀revolutionary note-taking platform designed to transform the academic landscape. It offers robust note-taking capabilities and fosters seamless collaboration between teachers and students. With features like shared note-sharing and a collaborative "nest" environment, students and teachers can collectively edit materials in real-time, fostering a dynamic learning community. Additionally, its language translation services, supporting over 50 languages, coupled with text-to-speech and speech-to-text functionalities, ensure accessibility and inclusivity for all users. We transcend learning boundaries, empowering users worldwide to engage, collaborate, and thrive.
 
 ## Tech Stack
 
@@ -39,7 +39,7 @@
 
 ## Getting Started
 
-1. Clone the repository: `git clone https://github.com/luxoncl/noted.git `
+1. Clone the repository: `git clone https://github.com/luxoncl/noted.git`
 2. Install dependencies: `npm install`
 3. Start the development server: `npm run dev`
 4. Open your browser and navigate to `http://localhost:3000`
@@ -51,8 +51,9 @@ We welcome contributions from the community! If you encounter any bugs or have i
 
 ## Contact
 
-For questions or inquiries, please contact developers ## Contributors
+For questions or inquiries, please contact [crispinr003@gmail.com](mailto:crispinr003@gmail.com).
 
+ ## Contributors
 - [Crispinr](https://github.com/crispinr)
 - [Luxon Cl](https://github.com/luxoncl)
 - [Kabilan](https://github.com/kabilan2902)
