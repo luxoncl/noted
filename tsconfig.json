@@ -27,7 +27,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "components/ui/navbar.tsx"
+    "components/ui/navbar.tsx",
+    "app/chat/Chats.jsx",
+    "app/notes/page.jsx"
   ],
   "exclude": ["node_modules"]
 }

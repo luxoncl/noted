@@ -1,6 +1,8 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 
 // Import a loading component to show while ChatEngine is loading
 const Loading = () => <div>Loading...</div>;
@@ -17,7 +19,7 @@ const MessageFormSocial = dynamic(
 export default function Chats() {
   const [showChat, setShowChat] = useState(false);
   const router = useRouter();
-  console.log(router.query);
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     setShowChat(true);
@@ -30,9 +32,10 @@ export default function Chats() {
       <div className="shadow">
         <ChatEngine
           height="calc(100ch - 200px)"
-          projectID="da891444-d17f-4a2b-8cd5-a2fec4b96c20"
-          userName={router.query.username}
-          userSecret={router.query.secret}
+          projectID="
+          e889b148-7e87-4e89-832e-3e35f0782369"
+          username={searchParams.get("username")}
+          userSecret={searchParams.get("secret")}
           renderNewMessageForm={() => <MessageFormSocial />}
         />
       </div>

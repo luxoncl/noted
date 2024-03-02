@@ -1,10 +1,13 @@
+"use client";
+
 import React, { useState } from "react";
-import Router from "next/router";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 
 export default function Auth() {
   const [username, setUsername] = useState("");
   const [secret, setSecret] = useState("");
+  const router = useRouter();
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -13,10 +16,10 @@ export default function Auth() {
       .put(
         "https://api.chatengine.io/users/",
         { username, secret },
-        { headers: { "Private-key": "47b35eef-3843-44ca-a25e-101307860ed0" } }
+        { headers: { "Private-key": "220ac31d-cd4a-46f8-9422-d23afe8906f7" } }
       )
       .then((r) =>
-        Router.push({ pathname: "/chats", query: { username, secret } })
+        router.push("/chats?username=" + username + "&secret=" + secret)
       );
   }
   return (
