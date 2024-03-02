@@ -1,35 +1,60 @@
-import { Poppins } from "next/font/google";
+"use client";
 
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { LoginButton } from "@/components/auth/login-button";
+import { Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
+import Loader from "@/components/ui/loader";
+import Island from "@/components/model/island";
+import CanvasDraw from "react-canvas-draw";
 
-const font = Poppins({
-  subsets: ["latin"],
-  weight: ["600"]
-})
+const Home = () => {
+  const handleSave = () => {
+    console.log("save");
+  };
 
-export default function Home() {
   return (
-    <main className="flex h-full flex-col items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-400 to-blue-800">
-      <div className="space-y-6 text-center">
-        <h1 className={cn(
-          "text-6xl font-semibold text-white drop-shadow-md",
-          font.className,
-        )}>
-          🔐 Auth
-        </h1>
-        <p className="text-white text-lg">
-          A simple authentication service
-        </p>
-        <div>
-          <LoginButton  asChild>
-            <Button variant="secondary" size="lg">
-              Sign in
-            </Button>
-          </LoginButton>
-        </div>
-      </div>
-    </main>
-  )
-}
+    <section className="w-full h-screen relative">
+      {/* <div className="absolute top-28 left-0 right-0 z-10 flex items-center justify center">
+        POPUP
+      </div> */}
+      hwllo
+      <CanvasDraw
+        onChange={null}
+        loadTimeOffset={5}
+        lazyRadius={0}
+        brushRadius={5}
+        brushColor="#444"
+        catenaryColor="#0a0302"
+        gridColor="rgba(150,150,150,0.17)"
+        hideGrid={false}
+        canvasWidth={1000}
+        canvasHeight={800}
+        disabled={false}
+        // imgSrc=""
+        saveData=""
+        immediateLoading={false}
+        hideInterface={true}
+        gridSizeX={25}
+        gridSizeY={25}
+        gridLineWidth={0.5}
+        hideGridX={false}
+        hideGridY={false}
+        enablePanAndZoom={false}
+        mouseZoomFactor={0.01}
+      />
+      {/* <Canvas
+        className="w-full h-screen relative"
+        camera={{ near: 0.1, far: 1000 }}
+      >
+        <Suspense fallback={<Loader />}>
+          <directionalLight />
+          <ambientLight />
+          <spotLight />
+          <hemisphereLight />
+          <Island />
+        </Suspense>
+      </Canvas> */}
+    </section>
+  );
+};
+
+export default Home;
