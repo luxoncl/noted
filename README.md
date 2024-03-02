@@ -54,10 +54,11 @@ We welcome contributions from the community! If you encounter any bugs or have i
 For questions or inquiries, please contact [crispinr003@gmail.com](mailto:crispinr003@gmail.com).
 
  ## Contributors
-- [Crispinr](https://github.com/crispinr)
-- [Luxon Cl](https://github.com/luxoncl)
-- [Kabilan](https://github.com/kabilan2902)
-- [Dinesk Kumar](https://github.com/dineshmooley)
-- [Ashik](https://github.com/Ashik1608) 
+
+
+<a href = "https://github.com/luxoncl/noted/graphs/contributors">
+  <img src = "https://contrib.rocks/image?repo=luxoncl/noted">
+</a>
+
 
 
