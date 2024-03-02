@@ -1,97 +1,64 @@
-# Next Auth v5 - Advanced Guide (2024)
+# 📝 Noted - A Comprehensive Note-Taking Platform
 
-![image](https://github.com/AntonioErdeljac/next-auth-v5-advanced-guide/assets/23248726/d0175397-8c3f-4e82-91c4-78c14f29bb81)
+## Overview
 
-This is a repository for Next Auth v5 - Advanced Guide (2024)
+"Noted" is a 🚀revolutionary note-taking platform designed to transform the academic landscape. It offers robust note-taking capabilities and fosters seamless collaboration between teachers and students. With features like shared note-sharing and a collaborative "nest" environment, students and teachers can collectively edit materials in real-time, fostering a dynamic learning community. Additionally, its language translation services, supporting over 50 languages, coupled with text-to-speech and speech-to-text functionalities, ensure accessibility and inclusivity for all users. We transcend learning boundaries, empowering users worldwide to engage, collaborate, and thrive.
 
-[VIDEO TUTORIAL](https://youtu.be/1MTyCvS05V4)
+## Tech Stack
 
-Key Features:
-- 🔐 Next-auth v5 (Auth.js)
-- 🚀 Next.js 14 with server actions
-- 🔑 Credentials Provider
-- 🌐 OAuth Provider (Social login with Google & GitHub)
-- 🔒 Forgot password functionality
-- ✉️ Email verification
-- 📱 Two factor verification
-- 👥 User roles (Admin & User)
-- 🔓 Login component (Opens in redirect or modal)
-- 📝 Register component
-- 🤔 Forgot password component
-- ✅ Verification component
-- ⚠️ Error component
-- 🔘 Login button
-- 🚪 Logout button
-- 🚧 Role Gate
-- 🔍 Exploring next.js middleware
-- 📈 Extending & Exploring next-auth session
-- 🔄 Exploring next-auth callbacks
-- 👤 useCurrentUser hook
-- 🛂 useRole hook
-- 🧑 currentUser utility
-- 👮 currentRole utility
-- 🖥️ Example with server component
-- 💻 Example with client component
-- 👑 Render content for admins using RoleGate component
-- 🛡️ Protect API Routes for admins only
-- 🔐 Protect Server Actions for admins only
-- 📧 Change email with new verification in Settings page
-- 🔑 Change password with old password confirmation in Settings page
-- 🔔 Enable/disable two-factor auth in Settings page
-- 🔄 Change user role in Settings page (for development purposes only)
+### Frontend & Backend
 
-### Prerequisites
+- **NextJS**: A React framework that provides server-side rendering and other performance optimizations.
+- **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
+- **Radix UI**: A library of React components for building accessible and composable UIs.
+- **ThreeJS**: A JavaScript library for creating 3D graphics in the browser.
+- **Prisma ORM**: A modern database toolkit for TypeScript and Node.js.
+- **PostgreSQL**: A powerful, open-source relational database system.
 
-**Node version 18.7.x**
+### Additional Packages
 
-### Cloning the repository
+- **NextAuth**: An authentication library for Next.js applications.
+- **JWT**: A JSON Web Token (JWT) library for secure authentication.
+- **SocketIO**: A library for real-time, bidirectional communication between web clients and servers.
+- **FramerMotion**: A library for creating animations and transitions in React applications.
+- **PostCSS**: A tool for transforming CSS with JavaScript plugins.
+- **OpenAI API**: An API for accessing OpenAI's language models and other AI-powered services.
 
-```shell
-git clone https://github.com/AntonioErdeljac/next-auth-v5-advanced-guide.git
-```
+## Use Cases
 
-### Install packages
+- **Lecture Note-Taking**: Take comprehensive notes during lectures.
+- **Collaborative Study Groups**: Collaborate with classmates on study materials.
+- **Teacher-Student Communication**: Engage in real-time discussions with teachers.
+- **Multilingual Support**: Translate notes into over 50 languages.
+- **Visual Learning Aids**: Utilize 3D graphics and animations for visual learning.
+- **Offline Study**: Access notes and study materials offline.
+- **Exam Preparation**: Prepare for exams with organized study materials.
+- **Professional Development**: Enhance professional skills with curated resources.
+- **Personal Organization**: Organize personal notes and materials.
+- **Accessibility and Inclusivity**: Ensure accessibility and inclusivity for all users.
 
-```shell
-npm i
-```
+## Getting Started
 
-### Setup .env file
+1. Clone the repository: `git clone https://github.com/luxoncl/noted.git`
+2. Install dependencies: `npm install`
+3. Start the development server: `npm run dev`
+4. Open your browser and navigate to `http://localhost:3000`
+
+## Contributing
+
+We welcome contributions from the community! If you encounter any bugs or have ideas for new features, please open an issue or submit a pull request.
 
 
-```js
-DATABASE_URL=
-DIRECT_URL=
+## Contact
 
-AUTH_SECRET=
+For questions or inquiries, please contact [crispinr003@gmail.com](mailto:crispinr003@gmail.com).
 
-GITHUB_CLIENT_ID=
-GITHUB_CLIENT_SECRET=
+ ## Contributors
 
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
 
-RESEND_API_KEY=
+<a href = "https://github.com/luxoncl/noted/graphs/contributors">
+  <img src = "https://contrib.rocks/image?repo=luxoncl/noted">
+</a>
 
-NEXT_PUBLIC_APP_URL=
-```
 
-### Setup Prisma
-```shell
-npx prisma generate
-npx prisma db push
-```
 
-### Start the app
-
-```shell
-npm run dev
-```
-
-## Available commands
-
-Running commands with npm `npm run [command]`
-
-| command         | description                              |
-| :-------------- | :--------------------------------------- |
-| `dev`           | Starts a development instance of the app |
