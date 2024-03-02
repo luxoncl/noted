@@ -51,5 +51,12 @@ We welcome contributions from the community! If you encounter any bugs or have i
 
 ## Contact
 
-For questions or inquiries, please contact developers @crispinr @luxoncl @kabilan2902 @Ashik1608 
+For questions or inquiries, please contact developers ## Contributors
+
+- [Crispinr](https://github.com/crispinr)
+- [Luxon Cl](https://github.com/luxoncl)
+- [Kabilan](https://github.com/kabilan2902)
+- [Dinesk Kumar](https://github.com/dineshmooley)
+- [Ashik](https://github.com/Ashik1608) 
+
 
