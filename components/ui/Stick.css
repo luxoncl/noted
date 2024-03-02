@@ -1,0 +1,28 @@
+.note {
+  background-color: white;
+  border-radius: 7px;
+  padding: 10px;
+  width: 240px;
+  float: left;
+  margin: 16px;
+}
+.Note h1 {
+  font-size: 25px;
+  margin-bottom: 6px;
+  font-family: "Courier New", Courier, monospace;
+}
+.note p {
+  font-size: 10px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: "Courier New", Courier, monospace;
+}
+.note button {
+  position: relative;
+  float: right;
+  margin-left: 50px;
+  color: black;
+  width: 36px;
+  height: 36px;
+  cursor: grab;
+}

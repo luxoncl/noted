@@ -17,6 +17,12 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        cloister: ["var(--font-cloister)"],
+        "old-english": ["var(--font-old-english)"],
+        "poster-script": ["var(--font-poster-script)"],
+        "us-angel": ["var(--font-us-angel)"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -16,7 +16,7 @@ export default function Auth() {
       .put(
         "https://api.chatengine.io/users/",
         { username, secret },
-        { headers: { "Private-key": "220ac31d-cd4a-46f8-9422-d23afe8906f7" } }
+        { headers: { "Private-key": "47188699-3a4c-43a8-96d1-e9c36cbfe82a" } }
       )
       .then((r) =>
         router.push("/chats?username=" + username + "&secret=" + secret)
@@ -26,7 +26,7 @@ export default function Auth() {
     <div className="background">
       <div className="auth-container">
         <form className="auth-form" onSubmit={(e) => onSubmit(e)}>
-          <div className="auth-title"> Chat with experts</div>
+          <div className="auth-title"> Lets chat guys !!</div>
           <div className="input-container">
             <input
               placeholder="Email"

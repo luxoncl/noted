@@ -1,0 +1,25 @@
+.form {
+  position: relative;
+  width: 480px;
+  margin: 30px auto 20px auto;
+  border-radius: 7px;
+}
+form.form input,
+form.form textarea {
+  width: 100%;
+  font-size: 25px;
+  font-family: cursive;
+  padding: 4px;
+}
+form.form button {
+  position: absolute;
+  right: 18px;
+  bottom: -18px;
+  background-color: rgba(219, 223, 30, 0.738);
+  color: black;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: grab;
+  outline: none;
+}

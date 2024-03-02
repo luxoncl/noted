@@ -11,7 +11,8 @@ generator client {
 
 enum UserRole {
   ADMIN
-  USER
+  STUDENT
+  FACULTY
 }
 
 model User {
@@ -21,10 +22,11 @@ model User {
   emailVerified         DateTime?
   image                 String?
   password              String?
-  role                  UserRole               @default(USER)
+  role                  UserRole               @default(STUDENT)
   accounts              Account[]
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
+  Note                  Note[]
 }
 
 model Account {
@@ -80,4 +82,14 @@ model TwoFactorConfirmation {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId])
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
 }

@@ -2,14 +2,62 @@
 
 import React from "react";
 
-import { Suspense, useRef, useEffect } from "react";
+import { Suspense, useRef, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import Loader from "@/components/ui/loader";
-import Island from "@/components/model/island";
 import CanvasDraw from "react-canvas-draw";
+import ReactStickyNotes from "@react-latest-ui/react-sticky-notes";
+import { useSession } from "next-auth/react";
+import axios from "axios";
 
 const Notes = () => {
-  const canvasRef = useRef<CanvasDraw>(null);
+  const canvasRef = useRef(null);
+  const { data: session } = useSession();
+
+  const handleExport = () => {
+    const canvas = canvasRef.current.canvasContainer.childNodes[1];
+
+    // Create a new canvas with the same dimensions
+    const invertedCanvas = document.createElement("canvas");
+    invertedCanvas.width = canvas.width;
+    invertedCanvas.height = canvas.height;
+    const ctx = invertedCanvas.getContext("2d");
+
+    // Draw the original image onto the inverted canvas
+    ctx.drawImage(canvas, 0, 0);
+
+    // Get the image data
+    const imageData = ctx.getImageData(
+      0,
+      0,
+      invertedCanvas.width,
+      invertedCanvas.height
+    );
+    const data = imageData.data;
+
+    // Invert the colors
+    for (let i = 0; i < data.length; i += 4) {
+      // Invert each color channel (red, green, blue)
+      data[i] = 255 - data[i]; // Red
+      data[i + 1] = 255 - data[i + 1]; // Green
+      data[i + 2] = 255 - data[i + 2]; // Blue
+      // Keep the alpha channel unchanged
+    }
+
+    // Put the modified image data back onto the canvas
+    ctx.putImageData(imageData, 0, 0);
+
+    // Convert the inverted canvas to a data URL
+    const dataUrl = invertedCanvas.toDataURL();
+
+    // Create a link element
+    const link = document.createElement("a");
+    link.href = dataUrl;
+    link.download = "inverted_drawing.png"; // Set the download filename
+
+    // Simulate a click on the link to trigger the download
+    link.click();
+  };
 
   // Function to handle undo action
   const handleUndo = () => {
@@ -30,6 +78,7 @@ const Notes = () => {
 
   const loadDrawingData = () => {
     const savedDrawingData = localStorage.getItem("drawingData");
+    console.log("nicee");
     if (savedDrawingData) {
       try {
         const parsedData = JSON.parse(savedDrawingData);
@@ -41,12 +90,27 @@ const Notes = () => {
       }
     }
   };
+  useEffect(() => {
+    loadDrawingData();
+    if (session) {
+      axios
+        .get(`/api/note/${session.user.id}`, {
+          headers: {
+            Authorization: `Bearer ${session.accessToken}`,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  });
 
   // Event listener for keypress events
   useEffect(() => {
-    loadDrawingData();
-
-    const handleKeyPress = (event: KeyboardEvent) => {
+    const handleKeyPress = (event) => {
       // Check if Ctrl (or Command) key is pressed along with 'Z' for undo
       if (event.ctrlKey || event.metaKey) {
         if (event.key === "z" || event.key === "Z") {
@@ -79,8 +143,7 @@ const Notes = () => {
       </div> */}
       <CanvasDraw
         ref={canvasRef}
-        onChange={null}
-        loadTimeOffset={5}
+        loadTimeOffset={100}
         lazyRadius={0}
         brushRadius={5}
         brushColor="#444"
@@ -91,7 +154,7 @@ const Notes = () => {
         canvasHeight={600}
         disabled={false}
         // imgSrc=""
-        immediateLoading={false}
+        immediateLoading={true}
         hideInterface={true}
         gridSizeX={25}
         gridSizeY={25}
@@ -105,10 +168,17 @@ const Notes = () => {
       <div className="flex gap-4 mt-3">
         <button onClick={handleSave}>Save</button>
         <button onClick={handleUndo}>Undo</button>
-        <button onClick={() => (canvasRef.current as any).clear()}>
-          Clear
-        </button>
+        <button onClick={() => canvasRef.current.clear()}>Clear</button>
+        <button onClick={handleExport}>Download</button>
       </div>
+
+      <ReactStickyNotes
+        className="w-[10vw]"
+        useCSS={true}
+        containerHeight={"400px"}
+        onChange={(type, payload, notes) => console.log(type, payload, notes)}
+      />
+
       {/* <Canvas
         className="w-full h-screen relative"
         camera={{ near: 0.1, far: 1000 }}
