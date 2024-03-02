@@ -29,7 +29,8 @@
     ".next/types/**/*.ts",
     "components/ui/navbar.tsx",
     "app/chat/Chats.jsx",
-    "app/notes/page.jsx"
+    "app/notes/page.jsx",
+    "middleware.js"
   ],
   "exclude": ["node_modules"]
 }
