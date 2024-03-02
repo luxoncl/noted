@@ -39,7 +39,7 @@
 
 ## Getting Started
 
-1. Clone the repository: `git clone https://github.com/your-username/noted.git`
+1. Clone the repository: `git clone https://github.com/luxoncl/noted.git `
 2. Install dependencies: `npm install`
 3. Start the development server: `npm run dev`
 4. Open your browser and navigate to `http://localhost:3000`
@@ -48,11 +48,8 @@
 
 We welcome contributions from the community! If you encounter any bugs or have ideas for new features, please open an issue or submit a pull request.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
-For questions or inquiries, please contact [noted@example.com](mailto:noted@example.com).
+For questions or inquiries, please contact developers @crispinr @luxoncl @kabilan2902 @Ashik1608 
 
