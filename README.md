@@ -52,6 +52,7 @@ We welcome contributions from the community! If you encounter any bugs or have i
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
+
 ## Contact
 
 For questions or inquiries, please contact [crispinr003@gmail.com](mailto:crispinr003@gmail.com).
