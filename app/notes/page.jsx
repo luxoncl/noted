@@ -10,6 +10,7 @@ import ReactStickyNotes from "@react-latest-ui/react-sticky-notes";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
+import { useSpeechSynthesis } from "react-speech-kit";
 import {
   Dialog,
   DialogContent,
@@ -18,6 +19,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import OpenAI from "openai";
 
 const Notes = () => {
   const canvasRef = useRef(null);
@@ -28,18 +30,151 @@ const Notes = () => {
     "No notes to summarize"
   );
 
+  const [lang, setLang] = useState("en-US");
+  const { speak } = useSpeechSynthesis();
+  const [transText, setTransText] = useState(null);
+
   const summarize = async () => {
     const notes = localStorage.getItem("react-sticky-notes");
     // Parse the JSON string into an array of objects
-    const parsedNotes = JSON.parse(jsonData);
+    const parsedNotes = JSON.parse(notes);
 
     // Extract only the text property from each object
     const textArray = parsedNotes.map((item) => item.text);
 
     console.log(textArray);
+
+    const resp = await axios.post(
+      "https://api.openai.com/v1/completions",
+      {
+        model: "gpt-3.5-turbo-instruct",
+        prompt: `Enhance the below mentioned list of notes for a clear clarification, make sure each note is seperate and clear \n\n
+        ${textArray.map((item, index) => index + item).join("\n")}
+        `,
+        temperature: 0,
+        max_tokens: 256,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      },
+      {
+        headers: {
+          Authorization: `Bearer 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`,
+        },
+      }
+    );
+
+    console.log(resp.data.choices[0].text);
+    setSummarizedNotes(resp.data.choices[0].text);
   };
 
-  summarize();
+  const getText = async (type, audioData) => {
+    const response = await fetch(`https://api.openai.com/v1/audio/${type}`, {
+      headers: {
+        Authorization: `Bearer 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`,
+      },
+      method: "POST",
+      body: audioData,
+    });
+
+    const data = await response.json();
+    return data;
+  };
+
+  const getTranslatedText = async (text, toLang) => {
+    const response = await fetch("https://api.openai.com/v1/completions", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer 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`,
+      },
+      method: "POST",
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo-instruct",
+        prompt: `Translate this ${toLang}:\n\n${text}`,
+        temperature: 0.3,
+        max_tokens: 100,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      }),
+    });
+
+    const data = await response.json();
+    return data;
+  };
+
+  const handleSpeak = async () => {
+    // console.log(lang)
+    const utterance = await translate();
+    if (utterance) {
+      const voices = speechSynthesis.getVoices();
+      console.log(voices);
+      const voice = voices.find((v) => v.lang === lang);
+      if (voice) {
+        // console.log(voice)
+        utterance.voice = voice;
+      }
+      // speechSynthesis.speak(utterance);
+    } else {
+      console.log("No");
+    }
+  };
+
+  const handleLangChange = (event) => {
+    setLang(event.target.value);
+  };
+
+  const translate = async () => {
+    let toLang, utterance;
+    switch (lang) {
+      case "en-US":
+        toLang = "English";
+        break;
+      case "ta-IN":
+        toLang = "Tamil";
+        break;
+      case "es-ES":
+        toLang = "Arabic";
+        break;
+      case "ja-JP":
+        toLang = "Japanese";
+        break;
+      case "fr-FR":
+        toLang = "French";
+        break;
+      case "hi-IN":
+        toLang = "Hindi";
+        break;
+      case "it-IT":
+        toLang = "Italian";
+        break;
+      case "zh-CN":
+        toLang = "Chinese";
+        break;
+      case "ja-JP":
+        toLang = "Bengali";
+        break;
+      case "de-DE":
+        toLang = "German";
+        break;
+      case "es-ES":
+        toLang = "Spanish";
+        break;
+      default:
+        toLang = "English";
+    }
+    if (toLang !== "English") {
+      const translatedText = await getTranslatedText(summarizedNotes, toLang);
+      console.log(translatedText.choices[0].text);
+      utterance = new SpeechSynthesisUtterance(
+        translatedText.choices[0].text.replace(/(\r\n|\n|\r)/gm, "")
+      );
+      setTransText(translatedText.choices[0].text);
+    } else {
+      utterance = new SpeechSynthesisUtterance(summarizedNotes);
+    }
+    return utterance;
+  };
 
   const handleExport = () => {
     const canvas = canvasRef.current.canvasContainer.childNodes[1];
@@ -247,7 +382,11 @@ const Notes = () => {
 
       <Dialog>
         <DialogTrigger>
-          <Button variant="outline" className="fixed right-10 bottom-10 z-30">
+          <Button
+            variant="outline"
+            className="fixed right-10 bottom-10 z-30"
+            onClick={summarize}
+          >
             Summarize Notes
           </Button>
         </DialogTrigger>
@@ -256,35 +395,64 @@ const Notes = () => {
             <DialogTitle>
               Hello this is you AI Summarizer to help you!
             </DialogTitle>
-            <DialogDescription>{summarizedNotes}</DialogDescription>
+            <DialogDescription>
+              {transText ? transText : summarizedNotes}
+              <br />
+              <div>
+                <select value={lang} onChange={handleLangChange}>
+                  <option value="en-US">English</option>
+                  <option value="ta-IN">Tamil</option>
+                  <option value="es-ES">Arabic</option>
+                  <option value="ja-JP">Japanese</option>
+                  <option value="fr-FR">French</option>
+                  <option value="hi-IN">Hindi</option>
+                  <option value="it-IT">Italian</option>
+                  <option value="zh-CN">Chinese</option>
+                  <option value="ja-JP">Bengali</option>
+                  <option value="de-DE">German</option>
+                  <option value="es-ES">Spanish</option>
+                </select>
+                <button
+                  onClick={async () => {
+                    await handleSpeak();
+                  }}
+                >
+                  Translate
+                </button>
+                <Button
+                  onClick={() => speak({ text: transText || summarizedNotes })}
+                  className="ml-5"
+                >
+                  Speak
+                </Button>
+              </div>
+            </DialogDescription>
           </DialogHeader>
         </DialogContent>
       </Dialog>
 
-      <div ref={stickyNoteRef}>
-        <ReactStickyNotes
-          className="w-[10vw]"
-          useCSS={true}
-          containerHeight={"400px"}
-          // onBeforeChange={(type, payload, notes) => {
-          //   console.log(type, payload, notes, "before change");
-          //   return payload;
-          // }}
-          // onChange={async (type, payload, notes) => {
-          //   console.log(type, payload, notes);
-          //   if (type === "add") {
-          //     console.log("Note added", payload, notes);
-          //     await axios
-          //       .post(`/api/note/${session.user.id}`, {
-          //         ...payload,
-          //       })
-          //       .then((response) => {
-          //         console.log(response);
-          //       });
-          //   }
-          // }}
-        />
-      </div>
+      <ReactStickyNotes
+        useCSS={true}
+        containerHeight={"400px"}
+        // containerWidth={"600px"}
+        // onBeforeChange={(type, payload, notes) => {
+        //   console.log(type, payload, notes, "before change");
+        //   return payload;
+        // }}
+        // onChange={async (type, payload, notes) => {
+        //   console.log(type, payload, notes);
+        //   if (type === "add") {
+        //     console.log("Note added", payload, notes);
+        //     await axios
+        //       .post(`/api/note/${session.user.id}`, {
+        //         ...payload,
+        //       })
+        //       .then((response) => {
+        //         console.log(response);
+        //       });
+        //   }
+        // }}
+      />
 
       {/* <Canvas
         className="w-full h-screen relative"

@@ -28,8 +28,8 @@ export default function Chats() {
   if (!showChat) return <div />;
 
   return (
-    <div className="background">
-      <div className="shadow">
+    <div className="">
+      <div className="">
         <ChatEngine
           height="calc(100ch - 200px)"
           projectID="4debb2f4-9be2-4663-af9f-e3715ed70386"

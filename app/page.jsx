@@ -1,14 +1,18 @@
 "use client";
+
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { LoginButton } from "@/components/auth/login-button";
 // import { ModelViewer } from "@/lib/modelviewer";
+import Spline from "@splinetool/react-spline";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 
 const Home = () => {
+  const { theme } = useTheme();
   return (
-    <main className="flex h-full flex-col items-center justify-center ">
+    <main className="flex h-[80vh] overflow-hidden flex-col items-center justify-center ">
       {/* <div className="space-y-6 text-center">
         <motion.div
           initial="hidden"
@@ -50,16 +54,23 @@ const Home = () => {
       </div> */}
       <header
         id="home"
-        className="flex flex-col-reverse md:flex-row w-full h-screen max-w-7xl items-center justify-center p-8 relative overflow-x-hidden"
+        className="flex flex-col-reverse md:flex-row w-full max-w-7xl items-center justify-center p-8 relative overflow-hidden"
       >
         <div className="w-full h-2/4 md:h-full md:w-2/5 flex flex-col justify-center items-center md:items-start gap-8">
           <div className="flex flex-col gap-2">
-            <Image
+            {/* <Image
               src="/assets/images/header_logo.png"
               width={300}
               height={10}
               alt="logo"
-            />
+            /> */}
+            <h1
+              className="text-md md:text-8xl font-bold"
+              style={{ marginLeft: "10px" }}
+            >
+              {" "}
+              noted.
+            </h1>
             <h2 className="text-md md:text-2xl" style={{ marginLeft: "10px" }}>
               taking notes made easier!
             </h2>
@@ -76,23 +87,35 @@ const Home = () => {
             className="w-full flex items-center justify-center md:justify-start gap-4"
             style={{ marginLeft: "10px" }}
           >
-            <LoginButton asChild>
-              <Button
-                className="w-48 h-12 text-sm sm:text-base rounded bg-white text-black hover:bg-fuchsia-700 hover:text-white transition-colors"
-                variant="secondary"
-                size="lg"
-              >
-                Sign in
-              </Button>
-            </LoginButton>
+            {theme === "light" ? (
+              <LoginButton asChild>
+                <Button
+                  className="w-48 h-12 text-sm sm:text-base rounded bg-black text-white hover:bg-fuchsia-700 hover:text-white transition-colors"
+                  variant="secondary"
+                  size="lg"
+                >
+                  Sign in
+                </Button>
+              </LoginButton>
+            ) : (
+              <LoginButton asChild>
+                <Button
+                  className="w-48 h-12 text-sm sm:text-base rounded bg-white text-black hover:bg-fuchsia-700 hover:text-white transition-colors"
+                  variant="secondary"
+                  size="lg"
+                >
+                  Sign in
+                </Button>
+              </LoginButton>
+            )}
           </div>
         </div>
 
         <div className="w-full h-2/4 md:h-full md:w-3/5 flex items-center justify-center relative -z-10">
-          {/* <Spline
+          <Spline
             className="w-full flex scale-[.25] sm:scale-[.35] lg:scale-[.5] items-center justify-center md:justify-start"
             scene="https://prod.spline.design/pvM5sSiYV2ivWraz/scene.splinecode"
-          /> */}
+          />
           {/* <ModelViewer /> */}
         </div>
       </header>

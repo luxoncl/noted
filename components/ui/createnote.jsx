@@ -3,6 +3,8 @@ import Fab from "@mui/material/Fab";
 import { Zoom } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import "./create.css";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 const Createnote = (props) => {
   const [isExpanded, setIsExpanaded] = useState(false);
@@ -28,19 +30,20 @@ const Createnote = (props) => {
     });
   };
   return (
-    <div className="">
+    <div className="create-note-container">
       <h1>
         <form className="form">
           {isExpanded && (
-            <input
+            <Input
               type="text"
               name="title"
               placeholder="Title"
               onChange={handleChange}
+              className="mb-5"
               value={note.title}
             />
           )}
-          <textarea
+          <Textarea
             name="content"
             placeholder="Take a note.."
             onClick={expand}

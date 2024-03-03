@@ -21,8 +21,8 @@ export default function Auth() {
       .then((r) => router.push(`/chats?username=${username}&secret=${secret}`));
   }
   return (
-    <div className="background">
-      <div className="auth-container">
+    <div className="">
+      <div className="ml-[8rem] auth-container">
         <form className="auth-form" onSubmit={(e) => onSubmit(e)}>
           <div className="auth-title"> Lets Chat Guys!!</div>
           <div className="input-container">

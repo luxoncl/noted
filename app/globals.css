@@ -16,6 +16,7 @@ body,
   left: 0px;
   width: calc(100vw - 200px);
   height: calc(100vh - 200px);
+  color: white;
 }
 
 .auth-container {
@@ -50,7 +51,7 @@ body,
   background-color: #4a5162;
   outline: none;
   border-width: 0px;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid rgba(10, 241, 182, 1);
   color: white;
 }
 
@@ -73,7 +74,6 @@ body,
 .submit-button::hover {
   background-color: hsla(0, 0%, 100%, 0.568);
 }
-
 @layer base {
   :root {
     --background: 0 0% 100%;

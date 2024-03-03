@@ -17,7 +17,7 @@ const Navbar = () => {
   const { theme } = useTheme();
 
   return (
-    <header className="flex justify-between items-center sm:px-16 px-8 py-4 max-w-5xl mx-auto">
+    <header className="flex justify-between items-center sm:px-16 px-8 py-4 max-w-5xl mx-auto z-[100]">
       <Link
         href="/"
         // className="w-10 h-10 btn rounded-lg bg-white items-center justify-center flex font-bold shadow-md"

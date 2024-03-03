@@ -75,10 +75,7 @@ const LoginPage = () => {
                 __html: captcha,
               }}
             ></div>
-            <video autoPlay loop>
-              <source src="Video_Loop.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+
             <div className="captcha_gen">
               <button id="refresh" onClick={handleRefresh}>
                 Refresh
