@@ -9,10 +9,37 @@ import CanvasDraw from "react-canvas-draw";
 import ReactStickyNotes from "@react-latest-ui/react-sticky-notes";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Notes = () => {
   const canvasRef = useRef(null);
   const { data: session } = useSession();
+  const [buttonAppended, setButtonAppended] = useState(false);
+  const stickyNoteRef = useRef(null);
+  const [summarizedNotes, setSummarizedNotes] = useState(
+    "No notes to summarize"
+  );
+
+  const summarize = async () => {
+    const notes = localStorage.getItem("react-sticky-notes");
+    // Parse the JSON string into an array of objects
+    const parsedNotes = JSON.parse(jsonData);
+
+    // Extract only the text property from each object
+    const textArray = parsedNotes.map((item) => item.text);
+
+    console.log(textArray);
+  };
+
+  summarize();
 
   const handleExport = () => {
     const canvas = canvasRef.current.canvasContainer.childNodes[1];
@@ -71,14 +98,14 @@ const Notes = () => {
     if (canvasRef.current) {
       const drawingData = canvasRef.current.getSaveData();
       // Save drawingData to your desired location (e.g., file, database)
-      console.log(drawingData);
+
       localStorage.setItem("drawingData", JSON.stringify(drawingData));
     }
   };
 
   const loadDrawingData = () => {
     const savedDrawingData = localStorage.getItem("drawingData");
-    console.log("nicee");
+
     if (savedDrawingData) {
       try {
         const parsedData = JSON.parse(savedDrawingData);
@@ -92,21 +119,34 @@ const Notes = () => {
   };
   useEffect(() => {
     loadDrawingData();
-    if (session) {
-      axios
-        .get(`/api/note/${session.user.id}`, {
-          headers: {
-            Authorization: `Bearer ${session.accessToken}`,
-          },
-        })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  });
+    const fetchNotes = async () => {
+      if (session) {
+        await axios
+          .get(`/api/note/${session.user.id}`)
+          .then((response) => {
+            console.log(response, "okok");
+            // if (response.data) {
+            //   response.data.forEach((note) => {
+            //     ReactStickyNotes.addNote({
+            //       id: note.id,
+            //       title: note.title,
+            //       content: note.content,
+            //       x: note.x,
+            //       y: note.y,
+            //       zIndex: note.zIndex,
+            //       color: note.color,
+            //       isPinned: note.isPinned,
+            //     });
+            //   });
+            // }
+          })
+          .catch((error) => {});
+      } else {
+        console.log("No session");
+      }
+    };
+    fetchNotes();
+  }, []);
 
   // Event listener for keypress events
   useEffect(() => {
@@ -134,6 +174,39 @@ const Notes = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
+  }, []);
+
+  useEffect(() => {
+    // Access the div element by className
+
+    if (
+      stickyNoteRef.current &&
+      stickyNoteRef.current.classList.contains("rs-notes--note__selected")
+    ) {
+      const captchaOutputDiv = document.querySelector(
+        ".rs-notes--note__selected.rs-notes--note__body.rs-notes--text"
+      );
+      console.log("caa", captchaOutputDiv);
+    } else {
+      console.log("no");
+    }
+
+    // Check if the div element exists and the button hasn't been appended yet
+    // if (captchaOutputDiv && !buttonAppended) {
+    //   // Create a new button element
+    //   const button = document.createElement("button");
+    //   button.textContent = "Click me";
+
+    //   // Add event listener to the button
+    //   button.addEventListener("click", () => {
+    //     alert("Button clicked!");
+    //   });
+
+    // Append the button to the div element
+    // captchaOutputDiv.appe(button);
+
+    // Update state to indicate that the button has been appended
+    // }
   }, []);
 
   return (
@@ -172,12 +245,46 @@ const Notes = () => {
         <button onClick={handleExport}>Download</button>
       </div>
 
-      <ReactStickyNotes
-        className="w-[10vw]"
-        useCSS={true}
-        containerHeight={"400px"}
-        onChange={(type, payload, notes) => console.log(type, payload, notes)}
-      />
+      <Dialog>
+        <DialogTrigger>
+          <Button variant="outline" className="fixed right-10 bottom-10 z-30">
+            Summarize Notes
+          </Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              Hello this is you AI Summarizer to help you!
+            </DialogTitle>
+            <DialogDescription>{summarizedNotes}</DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+
+      <div ref={stickyNoteRef}>
+        <ReactStickyNotes
+          className="w-[10vw]"
+          useCSS={true}
+          containerHeight={"400px"}
+          // onBeforeChange={(type, payload, notes) => {
+          //   console.log(type, payload, notes, "before change");
+          //   return payload;
+          // }}
+          // onChange={async (type, payload, notes) => {
+          //   console.log(type, payload, notes);
+          //   if (type === "add") {
+          //     console.log("Note added", payload, notes);
+          //     await axios
+          //       .post(`/api/note/${session.user.id}`, {
+          //         ...payload,
+          //       })
+          //       .then((response) => {
+          //         console.log(response);
+          //       });
+          //   }
+          // }}
+        />
+      </div>
 
       {/* <Canvas
         className="w-full h-screen relative"

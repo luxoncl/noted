@@ -7,12 +7,14 @@ import { Button } from "@/components/ui/button";
 import { logout } from "@/actions/logout";
 import { useSession } from "next-auth/react";
 import ThemeToggle from "./theme-toggle";
+import { useTheme } from "next-themes";
 
 const Navbar = () => {
   const pathname = usePathname();
   const isActive = (path) => path === pathname;
-  console.log(pathname, isActive("/about"));
+
   const { data: session } = useSession();
+  const { theme } = useTheme();
 
   return (
     <header className="flex justify-between items-center sm:px-16 px-8 py-4 max-w-5xl mx-auto">
@@ -21,12 +23,21 @@ const Navbar = () => {
         // className="w-10 h-10 btn rounded-lg bg-white items-center justify-center flex font-bold shadow-md"
       >
         <p className="">
-          <Image
-            src={"/assets/images/Noted_Logo_Black.png"}
-            alt="logo"
-            width={100}
-            height={100}
-          />
+          {theme === "light" ? (
+            <Image
+              src={"/assets/images/Noted_Logo_Black.png"}
+              alt="black-logo"
+              width={100}
+              height={100}
+            />
+          ) : (
+            <Image
+              src={"/assets/images/Noted_Logo_White.png"}
+              alt="white-logo"
+              width={100}
+              height={100}
+            />
+          )}
         </p>
       </Link>
       <nav className="flex text-lg gap-7 font-medium">

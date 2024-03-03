@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { LoginForm } from "@/components/auth/login-form";
 import { useRouter } from "next/navigation";
+// import Spline from '@splinetool/react-spline'
 
 const LoginPage = () => {
   const router = useRouter();
@@ -66,6 +67,7 @@ const LoginPage = () => {
           <div className="heading">
             <h1>Note: All the letters are in uppercase.</h1>
           </div>
+
           <div className="captcha_outer flex-row">
             <div
               className="captcha_output text-9xl tracking-[10rem]"
@@ -73,6 +75,10 @@ const LoginPage = () => {
                 __html: captcha,
               }}
             ></div>
+            <video autoPlay loop>
+              <source src="Video_Loop.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
             <div className="captcha_gen">
               <button id="refresh" onClick={handleRefresh}>
                 Refresh
