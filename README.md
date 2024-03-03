@@ -15,6 +15,7 @@
 - **Prisma ORM**: A modern database toolkit for TypeScript and Node.js.
 - **PostgreSQL**: A powerful, open-source relational database system.
 
+
 ### Additional Packages
 
 - **NextAuth**: An authentication library for Next.js applications.
@@ -47,6 +48,10 @@
 ## Contributing
 
 We welcome contributions from the community! If you encounter any bugs or have ideas for new features, please open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 
 ## Contact
