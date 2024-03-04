@@ -56,6 +56,7 @@ const Home = () => {
         id="home"
         className="flex flex-col-reverse md:flex-row w-full max-w-7xl items-center justify-center p-8 relative overflow-hidden"
       >
+
         <div className="w-full h-2/4 md:h-full md:w-2/5 flex flex-col justify-center items-center md:items-start gap-8">
           <div className="flex flex-col gap-2">
             {/* <Image
